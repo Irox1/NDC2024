@@ -81,11 +81,12 @@ class Player:
         self.target = (80, 80)
         self.alive = True
         self.attack_speed = 30
+        self.ded_animation = False
 
     def die(self):
         print("TEST")
         self.alive = False
-        
+        self.ded_animation = False
 
     def get_coo(self):
         return (self.x, self.y)
@@ -109,7 +110,7 @@ class Player:
                 if px.btn(px.KEY_S):
                     self.y += self.dy
                     self.moving = True
-            self.moving = False
+        self.moving = False
 
     def draw(self):
         if self.alive:
@@ -120,9 +121,14 @@ class Player:
                 px.blt(self.x, self.y, 0, 16*j, 24, 16, 16, 5)
             else:
                 px.blt(self.x, self.y, 0, 16*j, 8, 16, 16, 5)
-        else :
-            a = px.frame_count//15%3
-            px.blt(self.x, self.y, 0, 16*a, 88, 16, 16, 5)
+        else:
+            if not self.ded_animation:
+                a = px.frame_count // 15 % 3
+                px.blt(self.x, self.y, 0, 16 * a, 88, 16, 16, 5)
+                if a == 2:
+                    self.ded_animation = True
+            else:
+                px.blt(self.x, self.y, 0, 16 * 2, 88, 16, 16, 5)
                 
 
 
