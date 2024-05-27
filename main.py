@@ -4,11 +4,13 @@
 import random as rd
 import pyxel as px
 from time import sleep
+# SAlut
+
 
 class Boss:
     def __init__(self, target: tuple) -> None:
         self.x = rd.choice([-5, 261])
-        self.y = rd.choice([i for i in range(1,260)])
+        self.y = rd.choice([i for i in range(1, 260)])
         self.dx = 1
         self.dy = 1
         self.width = 16
@@ -43,7 +45,8 @@ class Boss:
         if self.esquive:
             for i in range(30):
                 px.text(self.x, self.y-8, "LOUPE", 0)
-            self.esquive = False    
+            self.esquive = False
+
 
 class Tir:
     def __init__(self, x, y, target: 'Araigne') -> None:
@@ -85,7 +88,6 @@ class Player:
     def die(self):
         print("TEST")
         self.alive = False
-        
 
     def get_coo(self):
         return (self.x, self.y)
@@ -120,16 +122,15 @@ class Player:
                 px.blt(self.x, self.y, 0, 16*j, 24, 16, 16, 5)
             else:
                 px.blt(self.x, self.y, 0, 16*j, 8, 16, 16, 5)
-        else :
-            a = px.frame_count//15%3
+        else:
+            a = px.frame_count//15 % 3
             px.blt(self.x, self.y, 0, 16*a, 88, 16, 16, 5)
-                
 
 
 class Araigne:
     def __init__(self, target: tuple) -> None:
         self.x = rd.choice([-5, 261])
-        self.y = rd.choice([i for i in range(-15,260)])
+        self.y = rd.choice([i for i in range(-15, 260)])
         self.dx = 1
         self.dy = 1
         self.width = 16
@@ -172,7 +173,7 @@ class Game:
         px.init(256, 256, fps=30)
         px.load("assets/3.pyxres")
         self.player = Player()
-        self.araigne_list = [Araigne((80,80))]
+        self.araigne_list = [Araigne((80, 80))]
         self.tir_list = []
         self.max_health = 10
         self.waves = 1
@@ -187,11 +188,13 @@ class Game:
         self.arachnidee_x = arachnidee.get_coo()[0]
         self.arachnidee_y = arachnidee.get_coo()[1]
         return (((self.position_player[1] - self.arachnidee_y)**2 + (self.position_player[0]-self.arachnidee_x)**2)**0.5)
+
     def fibonacci(n):
         if n <= 1:
             return n
         else:
             return Game.fibonacci(n-1) + Game.fibonacci(n-2)
+
     def health_heart(self):
         x = 5
         for i in range(1, self.player.health):
@@ -223,7 +226,7 @@ class Game:
         # cette fonction gère la collision
         for ara in self.araigne_list:
             for tir in self.tir_list:
-            
+
                 if ara.x+8 > tir.x > ara.x-8 and ara.y+8 > tir.y > ara.y-8:
                     """
                     self.chance = rd.choice(
@@ -235,17 +238,18 @@ class Game:
                         ara.esquive = True"""
                     self.tir_list.remove(tir)
                     self.araigne_list.remove(ara)
-                    
+
     def wave(self):
         self.waves += 1
-        if self.waves%2==0:
-            self.player.attack_speed-=1
+        if self.waves % 2 == 0:
+            self.player.attack_speed -= 1
         print(self.waves)
 
         print(Game.fibonacci(self.waves))
-        if px.frame_count % self.spawnrate ==0:
+        if px.frame_count % self.spawnrate == 0:
             for i in range(Game.fibonacci(self.waves)):
                 self.add_araigne()
+
     def update(self):
         # update player
         self.position_player = self.player.get_coo()
@@ -260,7 +264,7 @@ class Game:
                 if px.frame_count % self.spawnrate == 0:
                     self.add_araigne()
         """
-        if len(self.araigne_list) == 0 and px.frame_count%30==0:
+        if len(self.araigne_list) == 0 and px.frame_count % 30 == 0:
             self.wave()
 
         # Vérifie si le joueur est mort
@@ -298,7 +302,7 @@ class Game:
             tir.draw()
         self.health_heart()
         px.text(20, 20, f'{self.waves}', 8)
-        px.text(170,20, f"Ennemi Restant : {len(self.araigne_list)}",8)
+        px.text(170, 20, f"Ennemi Restant : {len(self.araigne_list)}", 8)
 
 
 Game()
