@@ -61,7 +61,7 @@ class Tir:
         self.x += self.dx
         self.y += self.dy
 
-        if self.calcul_distance() > 100:
+        if self.calcul_distance() > 200:
             self.trop_loin = True
 
     def draw(self):
