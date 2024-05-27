@@ -17,3 +17,5 @@ class Araigne:
 
     def draw(self):
         pass
+
+WAZAAAA
